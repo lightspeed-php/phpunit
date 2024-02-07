@@ -12,7 +12,6 @@ namespace PHPUnit\Framework\MockObject;
 use function array_merge;
 use function assert;
 use function debug_backtrace;
-use function trait_exists;
 use PHPUnit\Event\Facade as EventFacade;
 use PHPUnit\Framework\InvalidArgumentException;
 use PHPUnit\Framework\MockObject\Generator\ClassAlreadyExistsException;
@@ -111,44 +110,6 @@ final class MockBuilder
         );
 
         assert($object instanceof $this->type);
-        assert($object instanceof MockObject);
-
-        $this->testCase->registerMockObject($object);
-
-        return $object;
-    }
-
-    /**
-     * Creates a mock object for a trait using a fluent interface.
-     *
-     * @psalm-return MockObject&MockedType
-     *
-     * @throws \PHPUnit\Framework\Exception
-     * @throws ReflectionException
-     * @throws RuntimeException
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5306
-     */
-    public function getMockForTrait(): MockObject
-    {
-        EventFacade::emitter()->testTriggeredPhpunitDeprecation(
-            $this->testCase->valueObjectForEvents(),
-            'MockBuilder::getMockForTrait() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.',
-        );
-
-        assert(trait_exists($this->type));
-
-        $object = $this->generator->mockObjectForTrait(
-            $this->type,
-            $this->constructorArgs,
-            $this->mockClassName ?? '',
-            $this->originalConstructor,
-            $this->originalClone,
-            $this->autoload,
-            $this->methods,
-            $this->cloneArguments,
-        );
-
         assert($object instanceof MockObject);
 
         $this->testCase->registerMockObject($object);
