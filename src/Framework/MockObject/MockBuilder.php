@@ -56,7 +56,6 @@ final class MockBuilder
     private bool $originalConstructor   = true;
     private bool $originalClone         = true;
     private bool $autoload              = true;
-    private bool $cloneArguments        = false;
     private bool $callOriginalMethods   = false;
     private ?object $proxyTarget        = null;
     private bool $returnValueGeneration = true;
@@ -101,7 +100,7 @@ final class MockBuilder
             $this->originalConstructor,
             $this->originalClone,
             $this->autoload,
-            $this->cloneArguments,
+            false,
             $this->callOriginalMethods,
             $this->proxyTarget,
             false,
@@ -265,46 +264,6 @@ final class MockBuilder
         );
 
         $this->autoload = true;
-
-        return $this;
-    }
-
-    /**
-     * Disables the cloning of arguments passed to mocked methods.
-     *
-     * @return $this
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5315
-     */
-    public function disableArgumentCloning(): self
-    {
-        if (!$this->calledFromTestCase()) {
-            EventFacade::emitter()->testTriggeredPhpunitDeprecation(
-                $this->testCase->valueObjectForEvents(),
-                'MockBuilder::disableArgumentCloning() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.',
-            );
-        }
-
-        $this->cloneArguments = false;
-
-        return $this;
-    }
-
-    /**
-     * Enables the cloning of arguments passed to mocked methods.
-     *
-     * @return $this
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5315
-     */
-    public function enableArgumentCloning(): self
-    {
-        EventFacade::emitter()->testTriggeredPhpunitDeprecation(
-            $this->testCase->valueObjectForEvents(),
-            'MockBuilder::enableArgumentCloning() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.',
-        );
-
-        $this->cloneArguments = true;
 
         return $this;
     }
