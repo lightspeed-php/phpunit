@@ -420,16 +420,6 @@ EOT,
         $this->fail();
     }
 
-    #[IgnorePhpunitDeprecations]
-    public function testExpectationsCanBeConfiguredOnTestStubs(): void
-    {
-        $mock = $this->createStub(AnInterface::class);
-
-        $mock->expects($this->never())->method('doSomething');
-
-        $this->assertTrue(true);
-    }
-
     public function testWillReturnCallbackWithVariadicVariables(): void
     {
         $mock = $this->createMock(MethodWIthVariadicVariables::class);
